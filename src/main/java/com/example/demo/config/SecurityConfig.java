@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // 🔥 2. Let the invisible Preflight checks pass
-                        .requestMatchers("/users/login", "/users/register", "/error").permitAll()
+                        .requestMatchers("/", "/users/login", "/users/register", "/error").permitAll() // 🔥 ADDED "/" HERE
                         .anyRequest().authenticated()
                 );
 
