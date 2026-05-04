@@ -21,7 +21,7 @@ public class AIIntegrationService {
     private RestTemplate restTemplate;
 
     // This will point to your future Python server (e.g., http://localhost:5000/analyze)
-    @Value("${ai.service.url:http://localhost:5000/analyze}")
+    @Value("${PYTHON_AI_URL:http://localhost:5000/analyze}")
     private String aiServiceUrl;
 
     public AIAnalysisDTO requestBehaviorAnalysis(List<CategorySpendDTO> aggregatedData) {
