@@ -13,14 +13,19 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private JwtUtil jwtUtil; // 🔥 Properly injected as a Spring Bean
+
     @PostMapping("/register")
     public UserEntity register(@RequestBody UserEntity user) {
         return service.register(user);
     }
+
     @PostMapping("/login")
     public String login(@RequestBody UserEntity user) {
         UserEntity loggedInUser = service.login(user.getEmail(), user.getPassword());
 
-        return JwtUtil.generateToken(loggedInUser.getEmail());
+        // 🔥 Now passing the role into the token
+        return jwtUtil.generateToken(loggedInUser.getEmail(), loggedInUser.getRole());
     }
 }

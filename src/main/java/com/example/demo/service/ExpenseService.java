@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CategorySpendDTO;
 import com.example.demo.entity.Expense;
 import com.example.demo.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,24 +16,21 @@ public class ExpenseService {
     @Autowired
     private ExpenseRepository repo;
 
-    // 🔥 NEW METHOD (no token here anymore)
     public Expense addExpenseSecure(Expense expense) {
-
-        // basic validation
         if (expense.getAmount() <= 0) {
             throw new RuntimeException("Amount must be positive");
         }
-
-        // 🔴 TEMP: user linking removed (will be added properly via filter next)
         return repo.save(expense);
     }
 
-    public List<Expense> getAllExpenses() {
-        return repo.findAll();
+    // 🔥 Pagination active
+    public Page<Expense> getExpensesByUser(Long userId, Pageable pageable) {
+        return repo.findByUserId(userId, pageable);
     }
 
-    public List<Expense> getExpensesByUser(Long userId) {
-        return repo.findByUserId(userId);
+    // 🔥 Aggregation active
+    public List<CategorySpendDTO> getSpendAnalytics(Long userId) {
+        return repo.getBehavioralSpendAggregation(userId);
     }
 
     public void deleteExpense(Long id) {
