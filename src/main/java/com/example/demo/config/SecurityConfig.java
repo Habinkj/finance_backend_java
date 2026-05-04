@@ -47,8 +47,13 @@ public class SecurityConfig {
 
         // Allow credentials (like JWTs in headers)
         config.setAllowCredentials(true);
-        // Trust the default Vite React port (5173)
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+
+        // 🔥 FIX: Added your live Vercel URL to the trusted origins list
+        config.setAllowedOrigins(Arrays.asList(
+                "http://localhost:5173",
+                "https://finance-dashboard-ui.vercel.app"
+        ));
+
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
 
