@@ -1,12 +1,11 @@
 package com.example.demo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class DemoApplication {
@@ -15,16 +14,15 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Entity
-	public static class ExpenseRepository {
-
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Long id;
-
-		private String category;
-		private int amount;
-
-		// getters and setters
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("*") // Allows Vercel to ask for data
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+			}
+		};
 	}
 }
