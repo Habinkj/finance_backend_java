@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HealthController {
-    @GetMapping("/")
+
+    @GetMapping({"/", "/api/expenses/health"})
     public String healthCheck() {
         return "AI Core Online";
     }
+
 }
