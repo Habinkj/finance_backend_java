@@ -41,7 +41,9 @@ public class AIIntegrationService {
             );
             return response.getBody();
         } catch (Exception e) {
-            // If Python is down, we handle it gracefully, not with a crash.
+            System.err.println("🚨 CRITICAL AI COMMUNICATION ERROR 🚨");
+            System.err.println("Message: " + e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException("AI Service is currently unavailable. Please try again later.");
         }
     }
