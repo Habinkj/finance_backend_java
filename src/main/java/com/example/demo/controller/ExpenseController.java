@@ -56,7 +56,7 @@ public class ExpenseController {
 
     @GetMapping("/insights")
     public AIAnalysisDTO getAIFinancialInsights() {
-        List<CategorySpendDTO> spendData = service.getSpendAnalytics(TEMP_USER_ID);
+        List<CategorySpendDTO> spendData = service.getSpendAnalytics(3L);
         return aiService.requestBehaviorAnalysis(spendData);
     }
 }
